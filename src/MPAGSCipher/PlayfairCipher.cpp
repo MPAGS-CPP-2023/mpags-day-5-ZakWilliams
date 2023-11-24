@@ -109,7 +109,7 @@ std::string PlayfairCipher::applyCipher(const std::string& inputText,
         // Find the coordinates in the grid for each digraph
         PlayfairCoords pointOne{charLookup_.at(outputText[i])};
         PlayfairCoords pointTwo{charLookup_.at(outputText[i + 1])};
-        auto& [rowOne, columnOne]{pointOne};
+        auto& [rowOne, columnOne]{pointOne}; //These here are the structured binding declarations
         auto& [rowTwo, columnTwo]{pointTwo};
 
         // Find whether the two points are on a row, a column or form a rectangle/square
