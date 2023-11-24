@@ -5,6 +5,7 @@
 #include "ProcessCommandLine.hpp"
 #include "TransformChar.hpp"
 #include "VigenereCipher.hpp"
+#include "testCiphers.hpp"
 
 #include <cctype>
 #include <fstream>
@@ -111,9 +112,29 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Replacement for previous switch statement.
-    // construct an object depending on a suplied argument for general CIPHER
-    // 
+    // Implement tests of dynamic polymorphism
+    CaesarCipher cc{1};
+    PlayfairCipher pc{"hello"};
+    VigenereCipher vc{"HELLOTHERE"}; //Should shift everything by 1 letter, 2 letters
+
+    const bool cc_check{testCipher(cc, CipherMode::Encrypt, "HELLOWORLD", "IFMMPXPSME")};
+    const bool pc_check{testCipher(pc, CipherMode::Encrypt, 
+                        "BOBISSOMESORTOFJUNIORCOMPLEXXENOPHONEONEZEROTHING", 
+                        "FHIQXLTLKLTLSUFNPQPKETFENIOLVSWLTFIAFTLAKOWATEQOKPPA")};
+    const bool vc_check{testCipher(vc, CipherMode::Encrypt, 
+                        "THISISATESTOFTHEVIGENERECIPHERTHISISALONGERPASSAGEOFTEXT", 
+                        "ALTDWLHXVWASQEVXCMXIUICPQBWLVVALTDWLHPFRNICAOLZEXIVJEPLM")};
+
+    if (cc_check) {
+        std::cout << "CC VERIFIED" << std::endl;
+    }
+    if (vc_check) {
+        std::cout << "VC VERIFIED" << std::endl;
+    }
+    if (pc_check) {
+        std::cout << "PC VERIFIED" << std::endl;
+    }
+
 
     // Output the encrypted/decrypted text to stdout/file
     if (!settings.outputFile.empty()) {

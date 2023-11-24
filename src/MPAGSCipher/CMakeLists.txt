@@ -16,6 +16,8 @@ add_library(MPAGSCipher STATIC
   ProcessCommandLine.cpp
   TransformChar.hpp
   TransformChar.cpp
+  testCiphers.hpp
+  testCiphers.cpp
   )
 
 target_include_directories(MPAGSCipher

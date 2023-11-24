@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <string>
+#include <iostream>
 
 VigenereCipher::VigenereCipher(const std::string& key)
 {
@@ -49,10 +50,12 @@ std::string VigenereCipher::applyCipher(const std::string& inputText,
     std::string outputText{""}; 
     std::string feedingChar{""};
     // For each letter in input:
+    size_t index = 0;
     for ( const char& inputChar : inputText ) {
         // Find the corresponding letter in the key, repeating/truncating as required
-        std::size_t position = inputText.find(inputChar);
+        std::size_t position = index; //inputText.find(inputChar); //FINDS FIRST AVAILABLE INSTANCE
         size_t key_position = position % key_.size();
+        std::cout << position << " : " << key_position << std::endl;
         char key_letter = key_[key_position]; //finds the letter in the key
         // Find the Caesar cipher from the lookup
         CaesarCipher currentCaesar = charLookup_.at(key_letter); //CaesarCipher object defined as the one associated with key_letter
@@ -62,6 +65,7 @@ std::string VigenereCipher::applyCipher(const std::string& inputText,
         outputChar = currentCaesar.applyCipher(feedingChar, cipherMode);
         // Add the result to the output
         outputText += outputChar;
+        index++;
     }
     
     return outputText;
