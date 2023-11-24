@@ -1,10 +1,11 @@
 #include "CaesarCipher.hpp"
 #include "CipherMode.hpp"
-#include "CipherType.hpp"
+//#include "CipherType.hpp"
 #include "PlayfairCipher.hpp"
 #include "ProcessCommandLine.hpp"
 #include "TransformChar.hpp"
 #include "VigenereCipher.hpp"
+#include "CipherFactory.hpp"
 #include "testCiphers.hpp"
 
 #include <cctype>
@@ -91,26 +92,31 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string outputText;
+    //std::string outputText;
 
-    switch (settings.cipherType[0]) {
-        case CipherType::Caesar: {
-            // Run the Caesar cipher (using the specified key and encrypt/decrypt flag) on the input text
-            CaesarCipher cipher{settings.cipherKey[0]};
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-        case CipherType::Playfair: {
-            PlayfairCipher cipher{settings.cipherKey[0]};
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-        case CipherType::Vigenere: {
-            VigenereCipher cipher{settings.cipherKey[0]}; //Initialise as a VigenereCipher type, with key input, settings.cipheeKey[0]
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-    }
+    //switch (settings.cipherType[0]) {
+    //    case CipherType::Caesar: {
+    //        // Run the Caesar cipher (using the specified key and encrypt/decrypt flag) on the input text
+    //        CaesarCipher cipher{settings.cipherKey[0]};
+    //        outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //        break;
+    //    }
+    //    case CipherType::Playfair: {
+    //        PlayfairCipher cipher{settings.cipherKey[0]};
+    //        outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //        break;
+    //    }
+    //    case CipherType::Vigenere: {
+    //        VigenereCipher cipher{settings.cipherKey[0]}; //Initialise as a VigenereCipher type, with key input, settings.cipheeKey[0]
+    //        outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //        break;
+    //    }
+    //}
+
+    // Replacing the switch case with dynamic polymorphism
+    auto cipher{CipherFactory::makeCipher( settings.cipherType[0], settings.cipherKey[0])};
+    //outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    std::string outputText{ cipher -> applyCipher(inputText, settings.cipherMode)};
 
     // Implement tests of dynamic polymorphism
     CaesarCipher cc{1};
@@ -125,15 +131,9 @@ int main(int argc, char* argv[])
                         "THISISATESTOFTHEVIGENERECIPHERTHISISALONGERPASSAGEOFTEXT", 
                         "ALTDWLHXVWASQEVXCMXIUICPQBWLVVALTDWLHPFRNICAOLZEXIVJEPLM")};
 
-    if (cc_check) {
-        std::cout << "CC VERIFIED" << std::endl;
-    }
-    if (vc_check) {
-        std::cout << "VC VERIFIED" << std::endl;
-    }
-    if (pc_check) {
-        std::cout << "PC VERIFIED" << std::endl;
-    }
+    if (cc_check) {std::cout << "CC VERIFIED" << std::endl;}
+    if (vc_check) {std::cout << "VC VERIFIED" << std::endl;}
+    if (pc_check) {std::cout << "PC VERIFIED" << std::endl;}
 
 
     // Output the encrypted/decrypted text to stdout/file

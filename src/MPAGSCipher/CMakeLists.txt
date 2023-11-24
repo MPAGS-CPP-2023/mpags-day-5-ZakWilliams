@@ -18,6 +18,8 @@ add_library(MPAGSCipher STATIC
   TransformChar.cpp
   testCiphers.hpp
   testCiphers.cpp
+  CipherFactory.hpp
+  CipherFactory.cpp
   )
 
 target_include_directories(MPAGSCipher

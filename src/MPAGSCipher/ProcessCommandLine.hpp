@@ -2,7 +2,8 @@
 #define MPAGSCIPHER_PROCESSCOMMANDLINE_HPP
 
 #include "CipherMode.hpp"
-#include "CipherType.hpp"
+//#include "CipherType.hpp"
+#include "CipherFactory.hpp"
 
 #include <string>
 #include <vector>
