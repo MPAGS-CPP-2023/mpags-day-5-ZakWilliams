@@ -111,6 +111,10 @@ int main(int argc, char* argv[])
         }
     }
 
+    // Replacement for previous switch statement.
+    // construct an object depending on a suplied argument for general CIPHER
+    // 
+
     // Output the encrypted/decrypted text to stdout/file
     if (!settings.outputFile.empty()) {
         // Open the file and check that we can write to it
